@@ -1,14 +1,15 @@
 import React, { memo } from 'react';
-import styled, { ThemeProvider } from 'styled-components/native';
+import { ThemeProvider } from '@emotion/react';
+import styled from '@emotion/native';
 
 import { theme } from './src/theme';
 
-const StyledView = styled.View`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  background: ${({ theme }) => theme.background};
-`;
+const StyledView = styled.View(({ theme }) => ({
+  flex: 1,
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: theme.background,
+}));
 
 const App = () => {
   return (
