@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
 import { StatusBar } from 'react-native';
-import { ThemeProvider } from '@emotion/react';
-import styled from '@emotion/native';
+import styled, { ThemeProvider } from 'styled-components/native';
 
 import { theme } from './src/theme';
 import { Input } from './src/components';
@@ -27,7 +26,7 @@ const App = () => {
 
         <StyledText>TODO</StyledText>
 
-        <Input />
+        <Input placeholder="+ Add a Task" />
       </StyledSafeAreaView>
     </ThemeProvider>
   );

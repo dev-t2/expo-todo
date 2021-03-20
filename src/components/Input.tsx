@@ -1,12 +1,14 @@
-import React, { memo } from 'react';
+import React, { FC, memo } from 'react';
 import { useWindowDimensions } from 'react-native';
-import styled from '@emotion/native';
+import styled from 'styled-components/native';
 
 interface IStyledInput {
   width: number;
 }
 
-const StyledInput = styled.TextInput<IStyledInput>(({ theme, width }) => ({
+const StyledTextInput = styled.TextInput.attrs(({ theme }) => ({
+  placeholderTextColor: theme.onSecondary,
+}))<IStyledInput>(({ theme, width }) => ({
   width: width - 40,
   height: 60,
   marginVertical: 4,
@@ -14,14 +16,28 @@ const StyledInput = styled.TextInput<IStyledInput>(({ theme, width }) => ({
   paddingHorizontal: 24,
   borderRadius: 8,
   backgroundColor: theme.surface,
-  fontSize: 24,
   color: theme.onPrimary,
+  fontSize: 24,
 }));
 
-const Input = () => {
+interface IInput {
+  placeholder: string;
+}
+
+const Input: FC<IInput> = ({ placeholder }) => {
   const width = useWindowDimensions().width;
 
-  return <StyledInput width={width} />;
+  return (
+    <StyledTextInput
+      width={width}
+      maxLength={50}
+      autoCapitalize="none"
+      autoCorrect={false}
+      keyboardAppearance="dark"
+      returnKeyType="done"
+      placeholder={placeholder}
+    />
+  );
 };
 
 export default memo(Input);
