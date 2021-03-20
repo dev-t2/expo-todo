@@ -40,7 +40,7 @@ const App = () => {
 
         <Input
           value={text}
-          placeholder="+ Add a Task"
+          placeholder="Enter what you need to do..."
           onChangeText={onChangeText}
           onSubmitEditing={onSubmitEditing}
         />
