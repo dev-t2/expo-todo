@@ -10,10 +10,10 @@ const StyledTextInput = styled.TextInput.attrs(({ theme }) => ({
   placeholderTextColor: theme.onSecondary,
 }))<IStyledInput>(({ theme, width }) => ({
   width: width - 40,
-  height: 60,
+  alignItems: 'center',
   marginVertical: 4,
-  paddingVertical: 16,
-  paddingHorizontal: 24,
+  paddingVertical: 8,
+  paddingHorizontal: 16,
   borderRadius: 8,
   backgroundColor: theme.surface,
   color: theme.onPrimary,

@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const StyledIcon = styled(MaterialCommunityIcons)(({ theme }) => ({
   color: theme.onPrimary,
+  margin: 8,
 }));
 
 interface IIcon {
@@ -18,8 +19,8 @@ interface IIcon {
 
 const Icon: FC<IIcon> = ({ name, onPressOut }) => {
   return (
-    <Pressable hitSlop={10} onPressOut={onPressOut}>
-      <StyledIcon name={name} size={32} />
+    <Pressable hitSlop={8} onPressOut={onPressOut}>
+      <StyledIcon name={name} size={24} />
     </Pressable>
   );
 };

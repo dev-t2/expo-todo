@@ -3,7 +3,7 @@ import { StatusBar } from 'react-native';
 import styled, { ThemeProvider } from 'styled-components/native';
 
 import { theme } from './src/theme';
-import { Input } from './src/components';
+import { Input, Todo, Todos } from './src/components';
 
 const StyledSafeAreaView = styled.SafeAreaView(({ theme }) => ({
   flex: 1,
@@ -44,6 +44,10 @@ const App = () => {
           onChangeText={onChangeText}
           onSubmitEditing={onSubmitEditing}
         />
+
+        <Todos>
+          <Todo text="React Native" />
+        </Todos>
       </StyledSafeAreaView>
     </ThemeProvider>
   );
