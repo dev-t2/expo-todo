@@ -1,20 +1,34 @@
 import React, { memo } from 'react';
+import { StatusBar } from 'react-native';
 import { ThemeProvider } from '@emotion/react';
 import styled from '@emotion/native';
 
 import { theme } from './src/theme';
+import { Input } from './src/components';
 
-const StyledView = styled.View(({ theme }) => ({
+const StyledSafeAreaView = styled.SafeAreaView(({ theme }) => ({
   flex: 1,
   alignItems: 'center',
-  justifyContent: 'center',
   backgroundColor: theme.background,
+}));
+
+const StyledText = styled.Text(({ theme }) => ({
+  margin: 24,
+  color: theme.onPrimary,
+  fontSize: 40,
+  fontWeight: 'bold',
 }));
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <StyledView></StyledView>
+      <StyledSafeAreaView>
+        <StatusBar />
+
+        <StyledText>TODO</StyledText>
+
+        <Input />
+      </StyledSafeAreaView>
     </ThemeProvider>
   );
 };
