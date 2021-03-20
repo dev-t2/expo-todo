@@ -18,16 +18,31 @@ const StyledText = styled.Text(({ theme }) => ({
   fontWeight: 'bold',
 }));
 
+interface ITodo {
+  id: string;
+  text: string;
+  completed: boolean;
+}
+
+const sampleTodos: ITodo[] = [
+  { id: '1', text: 'T1', completed: false },
+  { id: '2', text: 'T2', completed: true },
+  { id: '3', text: 'T3', completed: false },
+  { id: '4', text: 'T4', completed: false },
+];
+
 const App = () => {
   const [text, setText] = useState('');
+  const [todos, setTodos] = useState<ITodo[]>(sampleTodos);
 
   const onChangeText = useCallback(text => {
     setText(text);
   }, []);
 
   const onSubmitEditing = useCallback(() => {
-    alert(`Add Todo: ${text}`);
+    const id = Date.now().toString();
 
+    setTodos(prev => [{ id, text, completed: false }, ...prev]);
     setText('');
   }, [text]);
 
@@ -46,7 +61,9 @@ const App = () => {
         />
 
         <Todos>
-          <Todo text="React Native" />
+          {todos.map(todo => (
+            <Todo key={todo.id} text={todo.text} />
+          ))}
         </Todos>
       </StyledSafeAreaView>
     </ThemeProvider>

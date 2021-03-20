@@ -1,7 +1,7 @@
 import React, { FC, memo } from 'react';
 import styled from 'styled-components/native';
 
-import { Icon } from '../components';
+import Icon from './Icon';
 
 const StyledView = styled.View(({ theme }) => ({
   flexDirection: 'row',

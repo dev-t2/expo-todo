@@ -12,7 +12,7 @@ const StyledScrollView = styled.ScrollView<IStyledScrollView>(({ width }) => ({
 }));
 
 interface ITodos {
-  children: JSX.Element;
+  children: JSX.Element[];
 }
 
 const Todos: FC<ITodos> = ({ children }) => {
