@@ -21,10 +21,18 @@ const StyledTextInput = styled.TextInput.attrs(({ theme }) => ({
 }));
 
 interface IInput {
+  value: string;
   placeholder: string;
+  onChangeText: (text: string) => void;
+  onSubmitEditing: () => void;
 }
 
-const Input: FC<IInput> = ({ placeholder }) => {
+const Input: FC<IInput> = ({
+  value,
+  placeholder,
+  onChangeText,
+  onSubmitEditing,
+}) => {
   const width = useWindowDimensions().width;
 
   return (
@@ -35,7 +43,10 @@ const Input: FC<IInput> = ({ placeholder }) => {
       autoCorrect={false}
       keyboardAppearance="dark"
       returnKeyType="done"
+      value={value}
       placeholder={placeholder}
+      onChangeText={onChangeText}
+      onSubmitEditing={onSubmitEditing}
     />
   );
 };

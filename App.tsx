@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import { StatusBar } from 'react-native';
 import styled, { ThemeProvider } from 'styled-components/native';
 
@@ -19,6 +19,18 @@ const StyledText = styled.Text(({ theme }) => ({
 }));
 
 const App = () => {
+  const [text, setText] = useState('');
+
+  const onChangeText = useCallback(text => {
+    setText(text);
+  }, []);
+
+  const onSubmitEditing = useCallback(() => {
+    alert(`Add Todo: ${text}`);
+
+    setText('');
+  }, [text]);
+
   return (
     <ThemeProvider theme={theme}>
       <StyledSafeAreaView>
@@ -26,7 +38,12 @@ const App = () => {
 
         <StyledText>TODO</StyledText>
 
-        <Input placeholder="+ Add a Task" />
+        <Input
+          value={text}
+          placeholder="+ Add a Task"
+          onChangeText={onChangeText}
+          onSubmitEditing={onSubmitEditing}
+        />
       </StyledSafeAreaView>
     </ThemeProvider>
   );
