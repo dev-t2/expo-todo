@@ -13,26 +13,41 @@ const StyledView = styled.View(({ theme }) => ({
   marginVertical: 4,
 }));
 
-const StyledText = styled.Text(({ theme }) => ({
+interface IStyledText {
+  completed: boolean;
+}
+
+const StyledText = styled.Text<IStyledText>(({ theme, completed }) => ({
   flex: 1,
   fontSize: 24,
-  color: theme.onPrimary,
+  color: completed ? theme.onSecondary : theme.onPrimary,
+  textDecorationLine: completed ? 'line-through' : 'none',
 }));
 
 interface ITodo {
-  text: string;
+  todo: Todo;
+  onCheck: (id: string) => () => void;
+  onDelete: (id: string) => () => void;
 }
 
-const Todo: FC<ITodo> = ({ text }) => {
+const Todo: FC<ITodo> = ({ todo, onCheck, onDelete }) => {
   return (
     <StyledView>
-      <Icon name="checkbox-blank-outline" />
+      <Icon
+        name={todo.completed ? 'checkbox-marked' : 'checkbox-blank-outline'}
+        completed={todo.completed}
+        onPressOut={onCheck(todo.id)}
+      />
 
-      <StyledText>{text}</StyledText>
+      <StyledText completed={todo.completed}>{todo.text}</StyledText>
 
-      <Icon name="pencil" />
+      {todo.completed || <Icon name="pencil" completed={todo.completed} />}
 
-      <Icon name="delete-forever" />
+      <Icon
+        name="delete-forever"
+        completed={todo.completed}
+        onPressOut={onDelete(todo.id)}
+      />
     </StyledView>
   );
 };

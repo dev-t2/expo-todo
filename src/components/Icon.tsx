@@ -3,10 +3,16 @@ import { GestureResponderEvent, Pressable } from 'react-native';
 import styled from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const StyledIcon = styled(MaterialCommunityIcons)(({ theme }) => ({
-  color: theme.onPrimary,
-  margin: 8,
-}));
+interface IStyledIcon {
+  completed: boolean;
+}
+
+const StyledIcon = styled(MaterialCommunityIcons)<IStyledIcon>(
+  ({ theme, completed }) => ({
+    color: completed ? theme.onSecondary : theme.onPrimary,
+    margin: 8,
+  })
+);
 
 interface IIcon {
   name:
@@ -14,13 +20,14 @@ interface IIcon {
     | 'checkbox-marked'
     | 'delete-forever'
     | 'pencil';
+  completed: boolean;
   onPressOut?: (e: GestureResponderEvent) => void;
 }
 
-const Icon: FC<IIcon> = ({ name, onPressOut }) => {
+const Icon: FC<IIcon> = ({ name, completed, onPressOut }) => {
   return (
     <Pressable hitSlop={8} onPressOut={onPressOut}>
-      <StyledIcon name={name} size={24} />
+      <StyledIcon name={name} size={24} completed={completed} />
     </Pressable>
   );
 };

@@ -18,13 +18,7 @@ const StyledText = styled.Text(({ theme }) => ({
   fontWeight: 'bold',
 }));
 
-interface ITodo {
-  id: string;
-  text: string;
-  completed: boolean;
-}
-
-const sampleTodos: ITodo[] = [
+const sampleTodos: Todo[] = [
   { id: '1', text: 'T1', completed: false },
   { id: '2', text: 'T2', completed: true },
   { id: '3', text: 'T3', completed: false },
@@ -33,18 +27,40 @@ const sampleTodos: ITodo[] = [
 
 const App = () => {
   const [text, setText] = useState('');
-  const [todos, setTodos] = useState<ITodo[]>(sampleTodos);
+  const [todos, setTodos] = useState<Todo[]>(sampleTodos);
 
   const onChangeText = useCallback(text => {
     setText(text);
   }, []);
 
-  const onSubmitEditing = useCallback(() => {
+  const onCreate = useCallback(() => {
     const id = Date.now().toString();
 
-    setTodos(prev => [{ id, text, completed: false }, ...prev]);
+    setTodos(todos => [{ id, text, completed: false }, ...todos]);
     setText('');
   }, [text]);
+
+  const onCheck = useCallback(
+    id => () => {
+      const updatedTodos = todos.map(todo => {
+        if (todo.id === id) {
+          return { ...todo, completed: !todo.completed };
+        }
+
+        return todo;
+      });
+
+      setTodos(updatedTodos);
+    },
+    []
+  );
+
+  const onDelete = useCallback(
+    id => () => {
+      setTodos(todos => todos.filter(todo => todo.id !== id));
+    },
+    []
+  );
 
   return (
     <ThemeProvider theme={theme}>
@@ -57,12 +73,17 @@ const App = () => {
           value={text}
           placeholder="Enter what you need to do..."
           onChangeText={onChangeText}
-          onSubmitEditing={onSubmitEditing}
+          onSubmitEditing={onCreate}
         />
 
         <Todos>
           {todos.map(todo => (
-            <Todo key={todo.id} text={todo.text} />
+            <Todo
+              key={todo.id}
+              todo={todo}
+              onCheck={onCheck}
+              onDelete={onDelete}
+            />
           ))}
         </Todos>
       </StyledSafeAreaView>
