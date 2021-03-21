@@ -22,7 +22,7 @@ const StyledTextInput = styled.TextInput.attrs(({ theme }) => ({
 
 interface IInput {
   value: string;
-  placeholder: string;
+  placeholder?: string;
   onChangeText: (text: string) => void;
   onSubmitEditing: () => void;
 }

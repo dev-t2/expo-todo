@@ -42,13 +42,22 @@ const App = () => {
 
   const onCheck = useCallback(
     id => () => {
-      const updatedTodos = todos.map(todo => {
-        if (todo.id === id) {
-          return { ...todo, completed: !todo.completed };
-        }
+      const updatedTodos = todos.map(todo =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      );
 
-        return todo;
-      });
+      setTodos(updatedTodos);
+    },
+    []
+  );
+
+  const onUpdate = useCallback(
+    (id, text) => () => {
+      const updatedTodos = todos.map(todo =>
+        todo.id === id ? { ...todo, text } : todo
+      );
+
+      console.log(updatedTodos);
 
       setTodos(updatedTodos);
     },
@@ -82,6 +91,7 @@ const App = () => {
               key={todo.id}
               todo={todo}
               onCheck={onCheck}
+              onUpdate={onUpdate}
               onDelete={onDelete}
             />
           ))}
