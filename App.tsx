@@ -1,5 +1,7 @@
 import React, { memo, useCallback, useState } from 'react';
 import { StatusBar } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppLoading from 'expo-app-loading';
 import styled, { ThemeProvider } from 'styled-components/native';
 
 import { theme } from './src/theme';
@@ -18,16 +20,30 @@ const StyledText = styled.Text(({ theme }) => ({
   fontWeight: 'bold',
 }));
 
-const sampleTodos: Todo[] = [
-  { id: '1', text: 'T1', completed: false },
-  { id: '2', text: 'T2', completed: true },
-  { id: '3', text: 'T3', completed: false },
-  { id: '4', text: 'T4', completed: false },
-];
-
 const App = () => {
+  const [isReady, setIsReady] = useState(false);
   const [text, setText] = useState('');
-  const [todos, setTodos] = useState<Todo[]>(sampleTodos);
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  const updateStorage = useCallback(async (todos: Todo[]) => {
+    try {
+      await AsyncStorage.setItem('todos', JSON.stringify(todos));
+
+      setTodos(todos);
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
+  const readStorage = useCallback(async () => {
+    const todos = await AsyncStorage.getItem('todos');
+
+    setTodos(JSON.parse(todos ?? '[]'));
+  }, []);
+
+  const onFinish = useCallback(() => {
+    setIsReady(true);
+  }, []);
 
   const onChangeText = useCallback(text => {
     setText(text);
@@ -35,10 +51,12 @@ const App = () => {
 
   const onCreate = useCallback(() => {
     const id = Date.now().toString();
+    const updatedTodos = [{ id, text, completed: false }, ...todos];
 
-    setTodos(todos => [{ id, text, completed: false }, ...todos]);
+    updateStorage(updatedTodos);
+
     setText('');
-  }, [text]);
+  }, [text, todos, updateStorage]);
 
   const onCheck = useCallback(
     id => () => {
@@ -46,9 +64,9 @@ const App = () => {
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
       );
 
-      setTodos(updatedTodos);
+      updateStorage(updatedTodos);
     },
-    [todos]
+    [todos, updateStorage]
   );
 
   const onUpdate = useCallback(
@@ -57,19 +75,21 @@ const App = () => {
         todo.id === id ? { ...todo, text } : todo
       );
 
-      setTodos(updatedTodos);
+      updateStorage(updatedTodos);
     },
-    [todos]
+    [todos, updateStorage]
   );
 
   const onDelete = useCallback(
     id => () => {
-      setTodos(todos => todos.filter(todo => todo.id !== id));
+      const updatedTodos = todos.filter(todo => todo.id !== id);
+
+      updateStorage(updatedTodos);
     },
-    []
+    [todos, updateStorage]
   );
 
-  return (
+  return isReady ? (
     <ThemeProvider theme={theme}>
       <StyledSafeAreaView>
         <StatusBar />
@@ -96,6 +116,12 @@ const App = () => {
         </Todos>
       </StyledSafeAreaView>
     </ThemeProvider>
+  ) : (
+    <AppLoading
+      startAsync={readStorage}
+      onFinish={onFinish}
+      onError={console.error}
+    />
   );
 };
 
