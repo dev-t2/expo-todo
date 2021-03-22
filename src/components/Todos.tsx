@@ -16,7 +16,7 @@ interface ITodos {
 }
 
 const Todos: FC<ITodos> = ({ children }) => {
-  const width = useWindowDimensions().width;
+  const { width } = useWindowDimensions();
 
   return <StyledScrollView width={width}>{children}</StyledScrollView>;
 };

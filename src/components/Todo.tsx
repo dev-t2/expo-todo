@@ -47,10 +47,8 @@ const Todo: FC<ITodo> = ({ todo, onCheck, onUpdate, onDelete }) => {
   const onSubmitEditing = useCallback(() => {
     setIsUpdate(false);
 
-    console.log('onSubmitEditing');
-
     onUpdate(todo.id, text);
-  }, []);
+  }, [onUpdate, todo.id, text]);
 
   return isUpdate ? (
     <Input

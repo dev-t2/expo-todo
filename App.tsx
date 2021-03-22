@@ -48,7 +48,7 @@ const App = () => {
 
       setTodos(updatedTodos);
     },
-    []
+    [todos]
   );
 
   const onUpdate = useCallback(
@@ -57,11 +57,9 @@ const App = () => {
         todo.id === id ? { ...todo, text } : todo
       );
 
-      console.log(updatedTodos);
-
       setTodos(updatedTodos);
     },
-    []
+    [todos]
   );
 
   const onDelete = useCallback(

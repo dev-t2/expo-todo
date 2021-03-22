@@ -33,7 +33,7 @@ const Input: FC<IInput> = ({
   onChangeText,
   onSubmitEditing,
 }) => {
-  const width = useWindowDimensions().width;
+  const { width } = useWindowDimensions();
 
   return (
     <StyledTextInput
