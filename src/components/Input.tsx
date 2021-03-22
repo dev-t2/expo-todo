@@ -23,6 +23,7 @@ const StyledTextInput = styled.TextInput.attrs(({ theme }) => ({
 interface IInput {
   value: string;
   placeholder?: string;
+  onBlur?: () => void;
   onChangeText: (text: string) => void;
   onSubmitEditing: () => void;
 }
@@ -30,6 +31,7 @@ interface IInput {
 const Input: FC<IInput> = ({
   value,
   placeholder,
+  onBlur,
   onChangeText,
   onSubmitEditing,
 }) => {
@@ -45,6 +47,7 @@ const Input: FC<IInput> = ({
       returnKeyType="done"
       value={value}
       placeholder={placeholder}
+      onBlur={onBlur}
       onChangeText={onChangeText}
       onSubmitEditing={onSubmitEditing}
     />

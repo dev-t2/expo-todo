@@ -40,6 +40,11 @@ const Todo: FC<ITodo> = ({ todo, onCheck, onUpdate, onDelete }) => {
     setIsUpdate(true);
   }, []);
 
+  const onBlur = useCallback(() => {
+    setText(todo.text);
+    setIsUpdate(false);
+  }, [todo.text]);
+
   const onChangeText = useCallback(text => {
     setText(text);
   }, []);
@@ -56,6 +61,7 @@ const Todo: FC<ITodo> = ({ todo, onCheck, onUpdate, onDelete }) => {
   return isUpdate ? (
     <Input
       value={text}
+      onBlur={onBlur}
       onChangeText={onChangeText}
       onSubmitEditing={onSubmitEditing(todo.id, text)}
     />
