@@ -28,7 +28,7 @@ const StyledText = styled.Text<IStyledText>(({ theme, completed }) => ({
 interface ITodo {
   todo: Todo;
   onCheck: (id: string) => () => void;
-  onUpdate: (id: string, text: string) => () => void;
+  onUpdate: (id: string, text: string) => void;
   onDelete: (id: string) => () => void;
 }
 
@@ -44,17 +44,20 @@ const Todo: FC<ITodo> = ({ todo, onCheck, onUpdate, onDelete }) => {
     setText(text);
   }, []);
 
-  const onSubmitEditing = useCallback(() => {
-    setIsUpdate(false);
+  const onSubmitEditing = useCallback(
+    (id, text) => () => {
+      onUpdate(id, text);
 
-    onUpdate(todo.id, text);
-  }, [onUpdate, todo.id, text]);
+      setIsUpdate(false);
+    },
+    [onUpdate]
+  );
 
   return isUpdate ? (
     <Input
       value={text}
       onChangeText={onChangeText}
-      onSubmitEditing={onSubmitEditing}
+      onSubmitEditing={onSubmitEditing(todo.id, text)}
     />
   ) : (
     <StyledView>

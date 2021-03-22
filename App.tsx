@@ -52,7 +52,7 @@ const App = () => {
   );
 
   const onUpdate = useCallback(
-    (id, text) => () => {
+    (id, text) => {
       const updatedTodos = todos.map(todo =>
         todo.id === id ? { ...todo, text } : todo
       );
