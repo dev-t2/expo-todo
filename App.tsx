@@ -1,6 +1,8 @@
 import { memo } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+
+import { SignInScreen } from './src/screens';
 
 const styles = StyleSheet.create({
   container: {
@@ -16,7 +18,7 @@ const App = () => {
     <View style={styles.container}>
       <StatusBar style="auto" />
 
-      <Text>Open up App.tsx to start working on your app!</Text>
+      <SignInScreen />
     </View>
   );
 };
