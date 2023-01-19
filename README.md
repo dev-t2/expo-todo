@@ -5,7 +5,7 @@
   - [Using TypeScript](https://docs.expo.dev/guides/typescript)
 - [ESLint](https://eslint.org)
   - [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react)
-  - [Rules of Hooks](https://reactjs.org/docs/hooks-rules.html)
+  - [eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks)
 - [Prettier](https://prettier.io)
 - [Emotion](https://emotion.sh/docs/introduction)
   - [@emotion/native](https://emotion.sh/docs/@emotion/native)
