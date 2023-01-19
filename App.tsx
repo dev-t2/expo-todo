@@ -1,25 +1,21 @@
 import { memo } from 'react';
-import { StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import styled from '@emotion/native';
 
 import { SignInScreen } from './src/screens';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const Container = styled.View(({ theme }) => ({
+  flex: 1,
+  backgroundColor: theme.colors.white,
+}));
 
 const App = () => {
   return (
-    <View style={styles.container}>
+    <Container>
       <StatusBar style="auto" />
 
       <SignInScreen />
-    </View>
+    </Container>
   );
 };
 

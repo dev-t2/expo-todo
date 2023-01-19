@@ -1,5 +1,7 @@
 export const theme = {
-  colors: {},
+  colors: {
+    white: '#ffffff',
+  },
 };
 
 export type CustomTheme = typeof theme;
