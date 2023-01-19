@@ -10,5 +10,6 @@
 - [Emotion](https://emotion.sh/docs/introduction)
   - [@emotion/native](https://emotion.sh/docs/@emotion/native)
   - [TypeScript](https://emotion.sh/docs/typescript)
+  - [no-empty-interface](https://typescript-eslint.io/rules/no-empty-interface)
 - [Tailwind CSS](https://tailwindcss.com)
   - [Customizing Colors](https://tailwindcss.com/docs/customizing-colors)
