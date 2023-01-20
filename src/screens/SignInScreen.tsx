@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useCallback, useState } from 'react';
 import styled from '@emotion/native';
 
 import { Input, SafeInputContainer } from '../components';
@@ -15,6 +15,17 @@ const StyledImage = styled.Image({
 });
 
 const SignInScreen = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const onChangeEmail = useCallback((email: string) => {
+    setEmail(email.trim());
+  }, []);
+
+  const onChangePassword = useCallback((password: string) => {
+    setPassword(password.trim());
+  }, []);
+
   return (
     <SafeInputContainer>
       <Container>
@@ -25,9 +36,17 @@ const SignInScreen = () => {
           returnKeyType="next"
           title="Email"
           placeholder="your@email.com"
+          value={email}
+          onChangeText={onChangeEmail}
         />
 
-        <Input secureTextEntry title="Password" placeholder="Please enter your password" />
+        <Input
+          secureTextEntry
+          title="Password"
+          placeholder="Please enter your password"
+          value={password}
+          onChangeText={onChangePassword}
+        />
       </Container>
     </SafeInputContainer>
   );
