@@ -15,7 +15,7 @@ const StyledImage = styled.Image({
 const SignInScreen = () => {
   return (
     <Container>
-      <StyledImage source={require('../../assets/test.png')} />
+      <StyledImage source={require('../../assets/main.png')} />
     </Container>
   );
 };
