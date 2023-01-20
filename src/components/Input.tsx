@@ -1,4 +1,5 @@
 import { FC, memo } from 'react';
+import { KeyboardTypeOptions, ReturnKeyTypeOptions } from 'react-native';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/native';
 
@@ -19,11 +20,20 @@ const StyledTextInput = styled.TextInput({
 });
 
 interface IInput {
+  keyboardType?: KeyboardTypeOptions;
+  returnKeyType?: ReturnKeyTypeOptions;
+  secureTextEntry?: boolean;
   title: string;
   placeholder?: string;
 }
 
-const Input: FC<IInput> = ({ title, placeholder }) => {
+const Input: FC<IInput> = ({
+  keyboardType = 'default',
+  returnKeyType = 'done',
+  secureTextEntry,
+  title,
+  placeholder,
+}) => {
   const theme = useTheme();
 
   return (
@@ -31,8 +41,12 @@ const Input: FC<IInput> = ({ title, placeholder }) => {
       <Title>{title}</Title>
 
       <StyledTextInput
+        keyboardType={keyboardType}
+        returnKeyType={returnKeyType}
+        secureTextEntry={secureTextEntry}
         autoCapitalize="none"
         autoCorrect={false}
+        textContentType="none"
         placeholder={placeholder ?? title}
         placeholderTextColor={theme.colors.gray[500]}
       />

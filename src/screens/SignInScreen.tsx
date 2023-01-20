@@ -18,8 +18,13 @@ const SignInScreen = () => {
     <Container>
       <StyledImage source={require('../../assets/main.png')} />
 
-      <Input title="Email" placeholder="your@email.com" />
-      <Input title="Password" />
+      <Input
+        keyboardType="email-address"
+        returnKeyType="next"
+        title="Email"
+        placeholder="your@email.com"
+      />
+      <Input secureTextEntry title="Password" />
     </Container>
   );
 };
