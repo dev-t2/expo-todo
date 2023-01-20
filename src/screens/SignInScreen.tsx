@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import styled from '@emotion/native';
+import { Input } from '../components';
 
 const Container = styled.View({
   flex: 1,
@@ -16,6 +17,9 @@ const SignInScreen = () => {
   return (
     <Container>
       <StyledImage source={require('../../assets/main.png')} />
+
+      <Input title="Email" placeholder="your@email.com" />
+      <Input title="Password" />
     </Container>
   );
 };
