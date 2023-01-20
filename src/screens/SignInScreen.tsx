@@ -35,7 +35,7 @@ const SignInScreen = () => {
           keyboardType="email-address"
           returnKeyType="next"
           title="Email"
-          placeholder="your@email.com"
+          placeholder="Please enter your email"
           value={email}
           onChangeText={onChangeEmail}
         />
