@@ -1,5 +1,4 @@
 import { memo } from 'react';
-import { Text } from 'react-native';
 import styled from '@emotion/native';
 
 const Container = styled.View({
@@ -8,10 +7,15 @@ const Container = styled.View({
   alignItems: 'center',
 });
 
+const StyledImage = styled.Image({
+  width: 200,
+  height: 200,
+});
+
 const SignInScreen = () => {
   return (
     <Container>
-      <Text>SignInScreen</Text>
+      <StyledImage source={require('../../assets/test.png')} />
     </Container>
   );
 };

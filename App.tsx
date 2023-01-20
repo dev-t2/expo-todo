@@ -1,7 +1,9 @@
 import { memo } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { ThemeProvider } from '@emotion/react';
 import styled from '@emotion/native';
 
+import { theme } from './src/theme';
 import { SignInScreen } from './src/screens';
 
 const Container = styled.View(({ theme }) => ({
@@ -11,11 +13,13 @@ const Container = styled.View(({ theme }) => ({
 
 const App = () => {
   return (
-    <Container>
-      <StatusBar style="auto" />
+    <ThemeProvider theme={theme}>
+      <Container>
+        <StatusBar style="auto" />
 
-      <SignInScreen />
-    </Container>
+        <SignInScreen />
+      </Container>
+    </ThemeProvider>
   );
 };
 
