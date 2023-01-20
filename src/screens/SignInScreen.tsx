@@ -1,18 +1,9 @@
-import { memo, useCallback } from 'react';
-import { Keyboard, Platform } from 'react-native';
+import { memo } from 'react';
 import styled from '@emotion/native';
 
-import { Input } from '../components';
+import { Input, SafeInputContainer } from '../components';
 
-const StyledKeyboardAvoidingView = styled.KeyboardAvoidingView({
-  flex: 1,
-});
-
-const StyledPressable = styled.Pressable({
-  flex: 1,
-});
-
-const StyledView = styled.View({
+const Container = styled.View({
   flex: 1,
   justifyContent: 'center',
   alignItems: 'center',
@@ -24,27 +15,21 @@ const StyledImage = styled.Image({
 });
 
 const SignInScreen = () => {
-  const onPress = useCallback(() => {
-    Keyboard.dismiss();
-  }, []);
-
   return (
-    <StyledKeyboardAvoidingView behavior={Platform.select({ ios: 'padding' })}>
-      <StyledPressable onPress={onPress}>
-        <StyledView>
-          <StyledImage source={require('../../assets/main.png')} />
+    <SafeInputContainer>
+      <Container>
+        <StyledImage source={require('../../assets/main.png')} />
 
-          <Input
-            keyboardType="email-address"
-            returnKeyType="next"
-            title="Email"
-            placeholder="your@email.com"
-          />
+        <Input
+          keyboardType="email-address"
+          returnKeyType="next"
+          title="Email"
+          placeholder="your@email.com"
+        />
 
-          <Input secureTextEntry title="Password" placeholder="Please enter your password" />
-        </StyledView>
-      </StyledPressable>
-    </StyledKeyboardAvoidingView>
+        <Input secureTextEntry title="Password" placeholder="Please enter your password" />
+      </Container>
+    </SafeInputContainer>
   );
 };
 
