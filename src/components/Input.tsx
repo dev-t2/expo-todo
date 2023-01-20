@@ -23,10 +23,9 @@ const StyledTextInput = styled.TextInput({
 
 interface IInput extends TextInputProps {
   title: string;
-  placeholder?: string;
 }
 
-const Input: FC<IInput> = ({ title, placeholder, ...props }) => {
+const Input: FC<IInput> = ({ title, ...props }) => {
   const theme = useTheme();
 
   return (
@@ -38,7 +37,6 @@ const Input: FC<IInput> = ({ title, placeholder, ...props }) => {
         autoCapitalize="none"
         autoCorrect={false}
         textContentType="none"
-        placeholder={placeholder ?? title}
         placeholderTextColor={theme.colors.gray[500]}
       />
     </Container>
