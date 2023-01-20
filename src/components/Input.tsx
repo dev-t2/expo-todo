@@ -31,6 +31,8 @@ const Input: FC<IInput> = ({ title, placeholder }) => {
       <Title>{title}</Title>
 
       <StyledTextInput
+        autoCapitalize="none"
+        autoCorrect={false}
         placeholder={placeholder ?? title}
         placeholderTextColor={theme.colors.gray[500]}
       />
