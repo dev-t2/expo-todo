@@ -29,7 +29,7 @@ interface IInputContainer {
   value: string;
 }
 
-const InputContainer = styled.View<IInputContainer>(({ theme, isFocused, value }) => ({
+const InputContainer = styled.Pressable<IInputContainer>(({ theme, isFocused, value }) => ({
   flexDirection: 'row',
   alignItems: 'center',
   paddingHorizontal: 10,
