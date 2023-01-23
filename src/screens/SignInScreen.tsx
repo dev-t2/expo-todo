@@ -1,8 +1,8 @@
 import { memo, useCallback, useRef, useState } from 'react';
+import { Keyboard, TextInput } from 'react-native';
 import styled from '@emotion/native';
 
-import { Input, SafeInputContainer } from '../components';
-import { TextInput } from 'react-native';
+import { Button, Input, SafeInputContainer } from '../components';
 
 const Container = styled.View({
   flex: 1,
@@ -13,6 +13,12 @@ const Container = styled.View({
 const StyledImage = styled.Image({
   width: 200,
   height: 200,
+});
+
+const ButtonContainer = styled.View({
+  width: '100%',
+  paddingHorizontal: 20,
+  marginTop: 32,
 });
 
 const SignInScreen = () => {
@@ -31,6 +37,10 @@ const SignInScreen = () => {
 
   const onChangePassword = useCallback((password: string) => {
     setPassword(password.trim());
+  }, []);
+
+  const onLogin = useCallback(() => {
+    Keyboard.dismiss();
   }, []);
 
   return (
@@ -58,7 +68,12 @@ const SignInScreen = () => {
           secureTextEntry
           value={password}
           onChangeText={onChangePassword}
+          onSubmitEditing={onLogin}
         />
+
+        <ButtonContainer>
+          <Button title="LOGIN" onPress={onLogin} />
+        </ButtonContainer>
       </Container>
     </SafeInputContainer>
   );

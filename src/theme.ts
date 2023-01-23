@@ -7,6 +7,7 @@ export const theme = {
     },
     primary: {
       default: '#3b82f6',
+      dark: '#1d4ed8',
     },
   },
 };
