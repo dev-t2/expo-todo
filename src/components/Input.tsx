@@ -1,5 +1,6 @@
-import { FC, memo, useCallback, useState } from 'react';
+import { FC, memo, useCallback, useMemo, useState } from 'react';
 import { TextInputProps } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/native';
 
@@ -23,13 +24,14 @@ const Title = styled.Text<ITitle>(({ theme, isFocused, value }) => ({
   fontWeight: isFocused || value ? '600' : '500',
 }));
 
-interface IStyledTextInput {
+interface IInputContainer {
   isFocused: boolean;
   value: string;
 }
 
-const StyledTextInput = styled.TextInput<IStyledTextInput>(({ theme, isFocused, value }) => ({
-  height: 40,
+const InputContainer = styled.View<IInputContainer>(({ theme, isFocused, value }) => ({
+  flexDirection: 'row',
+  alignItems: 'center',
   paddingHorizontal: 10,
   borderWidth: isFocused || value ? 2 : 1,
   borderRadius: 8,
@@ -39,18 +41,38 @@ const StyledTextInput = styled.TextInput<IStyledTextInput>(({ theme, isFocused, 
     ? theme.colors.black
     : theme.colors.gray[500],
   marginTop: 4,
+}));
+
+interface IStyledTextInput {
+  isFocused: boolean;
+  value: string;
+}
+
+const StyledTextInput = styled.TextInput<IStyledTextInput>(({ theme, isFocused, value }) => ({
+  flex: 1,
+  height: 40,
+  paddingLeft: 10,
   color: isFocused || value ? theme.colors.black : theme.colors.gray[500],
 }));
 
 interface IInput extends TextInputProps {
   title: string;
+  icon: 'email' | 'lock';
   value: string;
 }
 
-const Input: FC<IInput> = ({ title, value, ...props }) => {
+const Input: FC<IInput> = ({ title, icon, value, ...props }) => {
   const theme = useTheme();
 
   const [isFocused, setIsFocused] = useState(false);
+
+  const iconColor = useMemo(() => {
+    return isFocused
+      ? theme.colors.primary.default
+      : value
+      ? theme.colors.black
+      : theme.colors.gray[500];
+  }, [isFocused, theme.colors, value]);
 
   const onFocus = useCallback(() => {
     setIsFocused(true);
@@ -66,17 +88,21 @@ const Input: FC<IInput> = ({ title, value, ...props }) => {
         {title}
       </Title>
 
-      <StyledTextInput
-        {...props}
-        autoCapitalize="none"
-        autoCorrect={false}
-        textContentType="none"
-        placeholderTextColor={theme.colors.gray[500]}
-        isFocused={isFocused}
-        value={value}
-        onFocus={onFocus}
-        onBlur={onBlur}
-      />
+      <InputContainer isFocused={isFocused} value={value}>
+        <MaterialCommunityIcons name={icon} size={20} color={iconColor} />
+
+        <StyledTextInput
+          {...props}
+          autoCapitalize="none"
+          autoCorrect={false}
+          textContentType="none"
+          placeholderTextColor={theme.colors.gray[500]}
+          isFocused={isFocused}
+          value={value}
+          onFocus={onFocus}
+          onBlur={onBlur}
+        />
+      </InputContainer>
     </Container>
   );
 };

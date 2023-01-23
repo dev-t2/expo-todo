@@ -32,18 +32,20 @@ const SignInScreen = () => {
         <StyledImage source={require('../../assets/main.png')} />
 
         <Input
+          title="Email"
+          icon="email"
+          placeholder="Please enter your email"
           keyboardType="email-address"
           returnKeyType="next"
-          title="Email"
-          placeholder="Please enter your email"
           value={email}
           onChangeText={onChangeEmail}
         />
 
         <Input
-          secureTextEntry
           title="Password"
+          icon="lock"
           placeholder="Please enter your password"
+          secureTextEntry
           value={password}
           onChangeText={onChangePassword}
         />
