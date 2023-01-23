@@ -1,4 +1,4 @@
-import { memo, useCallback, useRef, useState } from 'react';
+import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { Keyboard, TextInput } from 'react-native';
 import styled from '@emotion/native';
 
@@ -25,6 +25,8 @@ const SignInScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const isDisabled = useMemo(() => !email || !password, [email, password]);
+
   const passwordRef = useRef<TextInput>(null);
 
   const onChangeEmail = useCallback((email: string) => {
@@ -40,8 +42,10 @@ const SignInScreen = () => {
   }, []);
 
   const onLogin = useCallback(() => {
-    Keyboard.dismiss();
-  }, []);
+    if (!isDisabled) {
+      Keyboard.dismiss();
+    }
+  }, [isDisabled]);
 
   return (
     <SafeInputContainer>
@@ -72,7 +76,7 @@ const SignInScreen = () => {
         />
 
         <ButtonContainer>
-          <Button title="LOGIN" onPress={onLogin} />
+          <Button isDisabled={isDisabled} title="LOGIN" onPress={onLogin} />
         </ButtonContainer>
       </Container>
     </SafeInputContainer>

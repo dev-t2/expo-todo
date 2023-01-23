@@ -5,11 +5,16 @@ interface IContainer {
   isPressed: boolean;
 }
 
-const Container = styled.Pressable<IContainer>(({ theme, isPressed }) => ({
+const Container = styled.Pressable<IContainer>(({ theme, disabled, isPressed }) => ({
   justifyContent: 'center',
   alignItems: 'center',
   paddingVertical: 16,
-  backgroundColor: isPressed ? theme.colors.primary.dark : theme.colors.primary.default,
+  backgroundColor: disabled
+    ? theme.colors.primary.light
+    : isPressed
+    ? theme.colors.primary.dark
+    : theme.colors.primary.default,
+  opacity: disabled ? 0.8 : 1,
   borderRadius: 8,
 }));
 
@@ -20,11 +25,12 @@ const Title = styled.Text(({ theme }) => ({
 }));
 
 interface IButton {
+  isDisabled?: boolean;
   title: string;
   onPress: () => void;
 }
 
-const Button: FC<IButton> = ({ title, onPress }) => {
+const Button: FC<IButton> = ({ isDisabled, title, onPress }) => {
   const [isPressed, setIsPressed] = useState(false);
 
   const onPressIn = useCallback(() => {
@@ -38,7 +44,12 @@ const Button: FC<IButton> = ({ title, onPress }) => {
   }, [onPress]);
 
   return (
-    <Container isPressed={isPressed} onPressIn={onPressIn} onPressOut={onPressOut}>
+    <Container
+      disabled={isDisabled}
+      isPressed={isPressed}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+    >
       <Title>{title}</Title>
     </Container>
   );
