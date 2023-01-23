@@ -1,5 +1,5 @@
-import { FC, memo, useCallback, useMemo, useState } from 'react';
-import { TextInputProps } from 'react-native';
+import { FC, memo, Ref, useCallback, useMemo, useState } from 'react';
+import { TextInput, TextInputProps } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/native';
@@ -29,7 +29,7 @@ interface IInputContainer {
   value: string;
 }
 
-const InputContainer = styled.Pressable<IInputContainer>(({ theme, isFocused, value }) => ({
+const InputContainer = styled.View<IInputContainer>(({ theme, isFocused, value }) => ({
   flexDirection: 'row',
   alignItems: 'center',
   paddingHorizontal: 10,
@@ -56,12 +56,13 @@ const StyledTextInput = styled.TextInput<IStyledTextInput>(({ theme, isFocused, 
 }));
 
 interface IInput extends TextInputProps {
+  inputRef?: Ref<TextInput>;
   title: string;
   icon: 'email' | 'lock';
   value: string;
 }
 
-const Input: FC<IInput> = ({ title, icon, value, ...props }) => {
+const Input: FC<IInput> = ({ inputRef, title, icon, value, ...props }) => {
   const theme = useTheme();
 
   const [isFocused, setIsFocused] = useState(false);
@@ -93,6 +94,7 @@ const Input: FC<IInput> = ({ title, icon, value, ...props }) => {
 
         <StyledTextInput
           {...props}
+          ref={inputRef}
           autoCapitalize="none"
           autoCorrect={false}
           textContentType="none"
