@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from '@emotion/react';
 import styled from '@emotion/native';
 
@@ -13,13 +14,15 @@ const Container = styled.View(({ theme }) => ({
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <Container>
-        <StatusBar style="auto" />
+    <NavigationContainer>
+      <ThemeProvider theme={theme}>
+        <Container>
+          <StatusBar style="auto" />
 
-        <SignInScreen />
-      </Container>
-    </ThemeProvider>
+          <SignInScreen />
+        </Container>
+      </ThemeProvider>
+    </NavigationContainer>
   );
 };
 
