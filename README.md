@@ -14,3 +14,5 @@
   - [no-empty-interface](https://typescript-eslint.io/rules/no-empty-interface)
 - [Tailwind CSS](https://tailwindcss.com)
   - [Customizing Colors](https://tailwindcss.com/docs/customizing-colors)
+- [React Navigation](https://reactnavigation.org)
+  - [Getting started](https://reactnavigation.org/docs/getting-started)
