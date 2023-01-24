@@ -18,7 +18,7 @@ const StyledImage = styled.Image({
 const ButtonContainer = styled.View({
   width: '100%',
   paddingHorizontal: 20,
-  marginTop: 32,
+  marginVertical: 32,
 });
 
 const SignInScreen = () => {
