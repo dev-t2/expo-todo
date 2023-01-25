@@ -1,14 +1,23 @@
 import { memo } from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { SignInScreen } from '../screens';
+import { ListScreen, SignInScreen } from '../screens';
 
-const { Navigator, Screen } = createNativeStackNavigator();
+type AuthStackParamList = {
+  SignIn: undefined;
+  List: undefined;
+};
+
+export type SignInScreenProps = NativeStackScreenProps<AuthStackParamList, 'SignIn'>;
+export type ListScreenProps = NativeStackScreenProps<AuthStackParamList, 'List'>;
+
+const { Navigator, Screen } = createNativeStackNavigator<AuthStackParamList>();
 
 const AuthStack = () => {
   return (
-    <Navigator>
+    <Navigator initialRouteName="SignIn">
       <Screen name="SignIn" component={SignInScreen} />
+      <Screen name="List" component={ListScreen} />
     </Navigator>
   );
 };

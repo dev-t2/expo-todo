@@ -16,3 +16,4 @@
 - [React Navigation](https://reactnavigation.org)
   - [Getting started](https://reactnavigation.org/docs/getting-started)
   - [Native Stack Navigator](https://reactnavigation.org/docs/native-stack-navigator)
+  - [Type checking with TypeScript](https://reactnavigation.org/docs/typescript)
