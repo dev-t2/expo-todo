@@ -6,6 +6,7 @@ import {
 } from '@react-navigation/native-stack';
 import { useTheme } from '@emotion/react';
 
+import { HeaderLeft } from '../components';
 import { ListScreen, SignInScreen } from '../screens';
 
 type AuthStackParamList = {
@@ -26,6 +27,7 @@ const AuthStack = () => {
       headerTitleAlign: 'center',
       headerTitleStyle: { fontWeight: '700' },
       headerTintColor: theme.colors.black,
+      headerLeft: (props) => <HeaderLeft {...props} />,
       contentStyle: { backgroundColor: theme.colors.white },
     };
   }, [theme.colors]);
