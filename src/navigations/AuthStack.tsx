@@ -23,16 +23,25 @@ const AuthStack = () => {
 
   const screenOptions = useMemo<NativeStackNavigationOptions>(() => {
     return {
-      contentStyle: {
-        backgroundColor: theme.colors.white,
-      },
+      headerTitleAlign: 'center',
+      headerTitleStyle: { fontWeight: '700' },
+      headerTintColor: theme.colors.black,
+      contentStyle: { backgroundColor: theme.colors.white },
     };
-  }, [theme.colors.white]);
+  }, [theme.colors]);
+
+  const signInOptions = useMemo<NativeStackNavigationOptions>(() => {
+    return { title: 'Login' };
+  }, []);
+
+  const listOptions = useMemo<NativeStackNavigationOptions>(() => {
+    return { title: 'TODO List' };
+  }, []);
 
   return (
     <Navigator initialRouteName="SignIn" screenOptions={screenOptions}>
-      <Screen name="SignIn" component={SignInScreen} />
-      <Screen name="List" component={ListScreen} />
+      <Screen name="SignIn" component={SignInScreen} options={signInOptions} />
+      <Screen name="List" component={ListScreen} options={listOptions} />
     </Navigator>
   );
 };
