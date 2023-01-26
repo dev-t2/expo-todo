@@ -1,5 +1,10 @@
-import { memo } from 'react';
-import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
+import { memo, useMemo } from 'react';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationOptions,
+  NativeStackScreenProps,
+} from '@react-navigation/native-stack';
+import { useTheme } from '@emotion/react';
 
 import { ListScreen, SignInScreen } from '../screens';
 
@@ -14,8 +19,18 @@ export type ListScreenProps = NativeStackScreenProps<AuthStackParamList, 'List'>
 const { Navigator, Screen } = createNativeStackNavigator<AuthStackParamList>();
 
 const AuthStack = () => {
+  const theme = useTheme();
+
+  const screenOptions = useMemo<NativeStackNavigationOptions>(() => {
+    return {
+      contentStyle: {
+        backgroundColor: theme.colors.white,
+      },
+    };
+  }, [theme.colors.white]);
+
   return (
-    <Navigator initialRouteName="SignIn">
+    <Navigator initialRouteName="SignIn" screenOptions={screenOptions}>
       <Screen name="SignIn" component={SignInScreen} />
       <Screen name="List" component={ListScreen} />
     </Navigator>
