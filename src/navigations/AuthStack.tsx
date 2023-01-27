@@ -6,7 +6,7 @@ import {
 } from '@react-navigation/native-stack';
 import { useTheme } from '@emotion/react';
 
-import { HeaderLeft } from '../components';
+import { HeaderLeft, HeaderRight } from '../components';
 import { ListScreen, SignInScreen } from '../screens';
 
 type AuthStackParamList = {
@@ -37,7 +37,10 @@ const AuthStack = () => {
   }, []);
 
   const listOptions = useMemo<NativeStackNavigationOptions>(() => {
-    return { title: 'TODO List' };
+    return {
+      title: 'TODO List',
+      headerRight: (props) => <HeaderRight {...props} />,
+    };
   }, []);
 
   return (
