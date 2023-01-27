@@ -35,7 +35,10 @@ const AuthStack = () => {
   }, [theme.colors]);
 
   const signInOptions = useMemo<NativeStackNavigationOptions>(() => {
-    return { title: 'Login' };
+    return {
+      title: 'Login',
+      headerShown: false,
+    };
   }, []);
 
   const listOptions = useMemo<NativeStackNavigationOptions>(() => {
