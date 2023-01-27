@@ -7,15 +7,17 @@ import {
 import { useTheme } from '@emotion/react';
 
 import { HeaderLeft, HeaderRight } from '../components';
-import { ListScreen, SignInScreen } from '../screens';
+import { ListScreen, SettingsScreen, SignInScreen } from '../screens';
 
-type AuthStackParamList = {
+export type AuthStackParamList = {
   SignIn: undefined;
   List: undefined;
+  Settings: undefined;
 };
 
 export type SignInScreenProps = NativeStackScreenProps<AuthStackParamList, 'SignIn'>;
 export type ListScreenProps = NativeStackScreenProps<AuthStackParamList, 'List'>;
+export type SettingsScreenProps = NativeStackScreenProps<AuthStackParamList, 'Settings'>;
 
 const { Navigator, Screen } = createNativeStackNavigator<AuthStackParamList>();
 
@@ -43,10 +45,15 @@ const AuthStack = () => {
     };
   }, []);
 
+  const settingsOptions = useMemo<NativeStackNavigationOptions>(() => {
+    return { title: 'Settings' };
+  }, []);
+
   return (
     <Navigator initialRouteName="SignIn" screenOptions={screenOptions}>
       <Screen name="SignIn" component={SignInScreen} options={signInOptions} />
       <Screen name="List" component={ListScreen} options={listOptions} />
+      <Screen name="Settings" component={SettingsScreen} options={settingsOptions} />
     </Navigator>
   );
 };
