@@ -1,11 +1,12 @@
 import { FC, memo, useCallback, useMemo, useRef, useState } from 'react';
 import { Keyboard, TextInput } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import styled from '@emotion/native';
 
 import { SignInScreenProps } from '../navigations/AuthStack';
 import { Button, Input, SafeInputContainer } from '../components';
 
-const Container = styled.View({
+const Container = styled(SafeAreaView)({
   flex: 1,
   justifyContent: 'center',
   alignItems: 'center',
