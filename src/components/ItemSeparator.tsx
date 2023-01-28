@@ -7,8 +7,8 @@ const Container = styled.View(({ theme }) => ({
   margin: 10,
 }));
 
-const Separator = () => {
+const ItemSeparator = () => {
   return <Container />;
 };
 
-export default memo(Separator);
+export default memo(ItemSeparator);

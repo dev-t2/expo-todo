@@ -2,7 +2,7 @@ import { memo, useCallback } from 'react';
 import { FlatList, ListRenderItem } from 'react-native';
 import styled from '@emotion/native';
 
-import { ListItem, Sepatator } from '../components';
+import { ItemSeparator, ListHeader, ListItem } from '../components';
 import { IListItem } from '../components/ListItem';
 
 const Container = styled.View({
@@ -31,7 +31,8 @@ const ListScreen = () => {
         windowSize={5}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
-        ItemSeparatorComponent={Sepatator}
+        ListHeaderComponent={ListHeader}
+        ItemSeparatorComponent={ItemSeparator}
       />
     </Container>
   );
