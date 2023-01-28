@@ -2,7 +2,7 @@ import { memo } from 'react';
 import styled from '@emotion/native';
 
 const Container = styled.View({
-  height: 10,
+  height: 20,
 });
 
 const ListHeader = () => {

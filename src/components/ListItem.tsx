@@ -14,10 +14,15 @@ const Container = styled.View({
   marginHorizontal: 10,
 });
 
-const Task = styled.Text({
+interface ITask {
+  isDone: boolean;
+}
+
+const Task = styled.Text<ITask>(({ theme, isDone }) => ({
   flex: 1,
+  color: isDone ? theme.colors.black : theme.colors.gray[500],
   marginHorizontal: 10,
-});
+}));
 
 export interface IListItem {
   id: number;
@@ -25,12 +30,28 @@ export interface IListItem {
   isDone: boolean;
 }
 
-const ListItem: FC<IListItem> = ({ task }) => {
+const ListItem: FC<IListItem> = ({ task, isDone }) => {
   const theme = useTheme();
 
   return (
     <Container>
-      <Task>{task}</Task>
+      <Pressable hitSlop={10}>
+        {isDone ? (
+          <MaterialCommunityIcons
+            name={'checkbox-marked'}
+            size={20}
+            color={theme.colors.primary.default}
+          />
+        ) : (
+          <MaterialCommunityIcons
+            name={'checkbox-blank-outline'}
+            size={20}
+            color={theme.colors.black}
+          />
+        )}
+      </Pressable>
+
+      <Task isDone={isDone}>{task}</Task>
 
       <Pressable hitSlop={10}>
         <MaterialCommunityIcons name="trash-can" size={20} color={theme.colors.error.default} />
