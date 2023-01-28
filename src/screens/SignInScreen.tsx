@@ -1,9 +1,8 @@
-import { FC, memo, useCallback, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { Keyboard, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styled from '@emotion/native';
 
-import { SignInScreenProps } from '../navigations/AuthStack';
 import { Button, Input, SafeInputContainer } from '../components';
 
 const Container = styled(SafeAreaView)({
@@ -23,7 +22,7 @@ const ButtonContainer = styled.View({
   marginVertical: 32,
 });
 
-const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
+const SignInScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -46,10 +45,8 @@ const SignInScreen: FC<SignInScreenProps> = ({ navigation }) => {
   const onLogin = useCallback(() => {
     if (!isDisabled) {
       Keyboard.dismiss();
-
-      navigation.navigate('List');
     }
-  }, [isDisabled, navigation]);
+  }, [isDisabled]);
 
   return (
     <SafeInputContainer>
