@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from '@emotion/native';
 
@@ -19,15 +19,11 @@ const todos: IListItem[] = [];
 const ListScreen = () => {
   const { bottom } = useSafeAreaInsets();
 
-  const onPress = useCallback(() => {
-    console.log('onPress');
-  }, []);
-
   return (
     <Container bottom={bottom}>
       <List todos={todos} />
 
-      <InputFAB onPress={onPress} />
+      <InputFAB />
     </Container>
   );
 };
