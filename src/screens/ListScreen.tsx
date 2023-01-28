@@ -1,8 +1,7 @@
-import { memo, useCallback } from 'react';
-import { FlatList, ListRenderItem } from 'react-native';
+import { memo } from 'react';
 import styled from '@emotion/native';
 
-import { ItemSeparator, ListEmpty, ListHeader, ListItem } from '../components';
+import { List } from '../components';
 import { IListItem } from '../components/ListItem';
 
 const Container = styled.View({
@@ -12,26 +11,9 @@ const Container = styled.View({
 const todos: IListItem[] = [];
 
 const ListScreen = () => {
-  const keyExtractor = useCallback(({ id }: IListItem) => `${id}`, []);
-
-  const renderItem = useCallback<ListRenderItem<IListItem>>(({ item }) => {
-    return <ListItem {...item} />;
-  }, []);
-
   return (
     <Container>
-      {todos.length ? (
-        <FlatList
-          data={todos}
-          windowSize={5}
-          keyExtractor={keyExtractor}
-          renderItem={renderItem}
-          ListHeaderComponent={ListHeader}
-          ItemSeparatorComponent={ItemSeparator}
-        />
-      ) : (
-        <ListEmpty />
-      )}
+      <List todos={todos} />
     </Container>
   );
 };
