@@ -18,4 +18,5 @@
   - [Native Stack Navigator](https://reactnavigation.org/docs/native-stack-navigator)
   - [Type checking with TypeScript](https://reactnavigation.org/docs/typescript)
 - [Redux Toolkit](https://redux-toolkit.js.org)
-  - [Getting Started with Redux Toolkit](https://redux-toolkit.js.org/introduction/getting-started)
+  - [Redux Toolkit Quick Start](https://redux-toolkit.js.org/tutorials/quick-start)
+  - [Redux Toolkit TypeScript Quick Start](https://redux-toolkit.js.org/tutorials/typescript)

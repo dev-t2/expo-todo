@@ -1,22 +1,24 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from '@emotion/react';
 
+import { store } from './src/store';
 import { theme } from './src/theme';
-import { AuthStack, MainStack } from './src/navigations';
+import RootStack from './src/navigations';
 
 const App = () => {
-  const [isLoggedIn] = useState(false);
-
   return (
-    <NavigationContainer>
-      <ThemeProvider theme={theme}>
-        <StatusBar style="auto" />
+    <Provider store={store}>
+      <NavigationContainer>
+        <ThemeProvider theme={theme}>
+          <StatusBar style="auto" />
 
-        {isLoggedIn ? <MainStack /> : <AuthStack />}
-      </ThemeProvider>
-    </NavigationContainer>
+          <RootStack />
+        </ThemeProvider>
+      </NavigationContainer>
+    </Provider>
   );
 };
 

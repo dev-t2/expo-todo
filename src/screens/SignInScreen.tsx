@@ -3,6 +3,8 @@ import { Keyboard, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styled from '@emotion/native';
 
+import { useAppDispatch } from '../store';
+import { login } from '../slices/user';
 import { Button, Input, SafeInputContainer } from '../components';
 
 const Container = styled(SafeAreaView)({
@@ -23,6 +25,8 @@ const ButtonContainer = styled.View({
 });
 
 const SignInScreen = () => {
+  const dispatch = useAppDispatch();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -45,8 +49,10 @@ const SignInScreen = () => {
   const onLogin = useCallback(() => {
     if (!isDisabled) {
       Keyboard.dismiss();
+
+      dispatch(login());
     }
-  }, [isDisabled]);
+  }, [isDisabled, dispatch]);
 
   return (
     <SafeInputContainer>
