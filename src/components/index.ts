@@ -4,3 +4,4 @@ export { default as HeaderRight } from './HeaderRight';
 export { default as Input } from './Input';
 export { default as ListItem } from './ListItem';
 export { default as SafeInputContainer } from './SafeInputContainer';
+export { default as Sepatator } from './Separator';

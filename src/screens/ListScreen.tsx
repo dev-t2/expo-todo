@@ -2,7 +2,8 @@ import { memo, useCallback } from 'react';
 import { FlatList, ListRenderItem } from 'react-native';
 import styled from '@emotion/native';
 
-import ListItem, { IListItem } from '../components/ListItem';
+import { ListItem, Sepatator } from '../components';
+import { IListItem } from '../components/ListItem';
 
 const Container = styled.View({
   flex: 1,
@@ -25,7 +26,13 @@ const ListScreen = () => {
 
   return (
     <Container>
-      <FlatList data={todos} windowSize={5} keyExtractor={keyExtractor} renderItem={renderItem} />
+      <FlatList
+        data={todos}
+        windowSize={5}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        ItemSeparatorComponent={Sepatator}
+      />
     </Container>
   );
 };
