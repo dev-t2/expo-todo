@@ -4,10 +4,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { HeaderButtonProps } from '@react-navigation/native-stack/lib/typescript/src/types';
 
-import { AuthStackParamList } from '../navigations/AuthStack';
+import { MainStackParamList } from '../navigations/MainStack';
 
 const HeaderRight: FC<HeaderButtonProps> = ({ tintColor }) => {
-  const navigation = useNavigation<NavigationProp<AuthStackParamList>>();
+  const navigation = useNavigation<NavigationProp<MainStackParamList>>();
 
   const onPress = useCallback(() => {
     navigation.navigate('Settings');
