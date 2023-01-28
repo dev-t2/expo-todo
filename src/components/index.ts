@@ -1,8 +1,8 @@
 export { default as Button } from './Button';
-export { default as FloatingActionButton } from './FloatingActionButton';
 export { default as HeaderLeft } from './HeaderLeft';
 export { default as HeaderRight } from './HeaderRight';
 export { default as Input } from './Input';
+export { default as InputFAB } from './InputFAB';
 export { default as ItemSeparator } from './ItemSeparator';
 export { default as List } from './List';
 export { default as ListEmpty } from './ListEmpty';

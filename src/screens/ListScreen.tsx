@@ -2,7 +2,7 @@ import { memo, useCallback } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from '@emotion/native';
 
-import { FloatingActionButton, List } from '../components';
+import { InputFAB, List } from '../components';
 import { IListItem } from '../components/ListItem';
 
 interface IContainer {
@@ -27,7 +27,7 @@ const ListScreen = () => {
     <Container bottom={bottom}>
       <List todos={todos} />
 
-      <FloatingActionButton onPress={onPress} />
+      <InputFAB onPress={onPress} />
     </Container>
   );
 };

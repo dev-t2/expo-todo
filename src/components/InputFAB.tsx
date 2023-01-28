@@ -19,11 +19,11 @@ const Container = styled.Pressable<IContainer>(({ theme, isPressed }) => ({
   borderRadius: 30,
 }));
 
-interface IFloatingActionButton {
+interface IInputFAB {
   onPress: () => void;
 }
 
-const FloatingActionButton: FC<IFloatingActionButton> = ({ onPress }) => {
+const InputFAB: FC<IInputFAB> = ({ onPress }) => {
   const theme = useTheme();
 
   const [isPressed, setIsPressed] = useState(false);
@@ -45,4 +45,4 @@ const FloatingActionButton: FC<IFloatingActionButton> = ({ onPress }) => {
   );
 };
 
-export default memo(FloatingActionButton);
+export default memo(InputFAB);
