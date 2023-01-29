@@ -52,9 +52,20 @@ const ListScreen = () => {
     [dispatch, setItem, todos]
   );
 
+  const onDelete = useCallback(
+    (id: string) => async () => {
+      const deletedTodos = todos.filter((todo) => todo.id !== id);
+
+      await setItem(JSON.stringify(deletedTodos));
+
+      dispatch(updateTodos(deletedTodos));
+    },
+    [todos, setItem, dispatch]
+  );
+
   return (
     <Container bottom={bottom}>
-      <List todos={todos} onIsBottom={onIsBottom} />
+      <List todos={todos} onIsBottom={onIsBottom} onDelete={onDelete} />
 
       <InputFAB isBottom={isBottom} onInsert={onInsert} />
     </Container>

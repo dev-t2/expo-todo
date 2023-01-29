@@ -26,7 +26,11 @@ const Task = styled.Text<ITask>(({ theme, isDone }) => ({
   marginHorizontal: 10,
 }));
 
-const ListItem: FC<ITodo> = ({ task, isDone }) => {
+interface IListItem extends ITodo {
+  onDelete: (id: string) => () => void;
+}
+
+const ListItem: FC<IListItem> = ({ id, task, isDone, onDelete }) => {
   const theme = useTheme();
 
   return (
@@ -49,7 +53,7 @@ const ListItem: FC<ITodo> = ({ task, isDone }) => {
 
       <Task isDone={isDone}>{task}</Task>
 
-      <Pressable hitSlop={10}>
+      <Pressable hitSlop={10} onPress={onDelete(id)}>
         <MaterialCommunityIcons name="trash-can" size={20} color={theme.colors.error.default} />
       </Pressable>
     </Container>

@@ -10,14 +10,18 @@ import ListEmpty from './ListEmpty';
 interface IList {
   todos: ITodo[];
   onIsBottom: (isBottom: boolean) => void;
+  onDelete: (id: string) => () => void;
 }
 
-const List: FC<IList> = ({ todos, onIsBottom }) => {
+const List: FC<IList> = ({ todos, onIsBottom, onDelete }) => {
   const keyExtractor = useCallback(({ id }: ITodo) => id, []);
 
-  const renderItem = useCallback<ListRenderItem<ITodo>>(({ item }) => {
-    return <ListItem {...item} />;
-  }, []);
+  const renderItem = useCallback<ListRenderItem<ITodo>>(
+    ({ item }) => {
+      return <ListItem {...item} onDelete={onDelete} />;
+    },
+    [onDelete]
+  );
 
   const onScroll = useCallback(
     ({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>) => {
