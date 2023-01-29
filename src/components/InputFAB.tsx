@@ -1,20 +1,21 @@
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, Keyboard, Platform, TextInput, useWindowDimensions } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/native';
 
-interface IStyledView {
-  animatedValue: number;
+interface IInputContainer {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  inputWidth: any;
   keyboardHeight: number;
 }
 
-const StyledView = styled(Animated.View)<IStyledView>(
-  ({ theme, animatedValue, keyboardHeight }) => ({
+const InputContainer = styled(Animated.View)<IInputContainer>(
+  ({ theme, inputWidth, keyboardHeight }) => ({
     position: 'absolute',
     bottom: keyboardHeight,
     right: 10,
-    width: animatedValue,
+    width: inputWidth,
     height: 60,
     justifyContent: 'center',
     backgroundColor: theme.colors.primary.default,
@@ -39,14 +40,25 @@ const StyledTextInput = styled.TextInput(({ theme }) => ({
   color: theme.colors.white,
 }));
 
-interface IStyledPressable {
+interface IButtonContainer {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  animatedRotation: any;
   keyboardHeight: number;
 }
 
-const StyledPressable = styled.Pressable<IStyledPressable>(({ theme, keyboardHeight }) => ({
-  position: 'absolute',
-  bottom: keyboardHeight,
-  right: 10,
+const ButtonContainer = styled(Animated.View)<IButtonContainer>(
+  ({ animatedRotation, keyboardHeight }) => ({
+    position: 'absolute',
+    bottom: keyboardHeight,
+    right: 10,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    transform: [{ rotate: animatedRotation }],
+  })
+);
+
+const StyledPressable = styled.Pressable(({ theme }) => ({
   width: 60,
   height: 60,
   justifyContent: 'center',
@@ -65,11 +77,18 @@ const InputFAB = () => {
 
   const [isOpened, setIsOpened] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(BOTTOM);
-  const [animatedValue, setAnimatedValue] = useState(INPUT_WIDTH);
   const [text, setText] = useState('');
 
   const inputRef = useRef<TextInput>(null);
   const inputWidth = useRef(new Animated.Value(INPUT_WIDTH)).current;
+  const buttonRotation = useRef(new Animated.Value(0)).current;
+
+  const animatedRotation = useMemo(() => {
+    return buttonRotation.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0deg', '315deg'],
+    });
+  }, [buttonRotation]);
 
   useEffect(() => {
     if (Platform.OS === 'ios') {
@@ -88,16 +107,6 @@ const InputFAB = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const id = inputWidth.addListener(({ value }) => {
-      setAnimatedValue(value);
-    });
-
-    return () => {
-      inputWidth.removeListener(id);
-    };
-  }, [inputWidth]);
-
   const onPressOut = useCallback(() => {
     if (isOpened) {
       setText('');
@@ -110,6 +119,12 @@ const InputFAB = () => {
       }).start(() => {
         inputRef.current?.blur();
       });
+
+      Animated.spring(buttonRotation, {
+        toValue: 0,
+        useNativeDriver: false,
+        bounciness: 20,
+      }).start();
     } else {
       setIsOpened(true);
 
@@ -120,8 +135,14 @@ const InputFAB = () => {
       }).start(() => {
         inputRef.current?.focus();
       });
+
+      Animated.spring(buttonRotation, {
+        toValue: 1,
+        useNativeDriver: false,
+        bounciness: 20,
+      }).start();
     }
-  }, [isOpened, inputWidth, width]);
+  }, [isOpened, inputWidth, width, buttonRotation]);
 
   const onChangeText = useCallback((text: string) => {
     setText(text);
@@ -138,7 +159,7 @@ const InputFAB = () => {
 
   return (
     <>
-      <StyledView animatedValue={animatedValue} keyboardHeight={keyboardHeight}>
+      <InputContainer inputWidth={inputWidth} keyboardHeight={keyboardHeight}>
         <StyledTextInput
           ref={inputRef}
           autoCapitalize="none"
@@ -149,11 +170,13 @@ const InputFAB = () => {
           onChangeText={onChangeText}
           onBlur={onBlur}
         />
-      </StyledView>
+      </InputContainer>
 
-      <StyledPressable hitSlop={10} keyboardHeight={keyboardHeight} onPressOut={onPressOut}>
-        <MaterialCommunityIcons name="plus" size={24} color={theme.colors.white} />
-      </StyledPressable>
+      <ButtonContainer animatedRotation={animatedRotation} keyboardHeight={keyboardHeight}>
+        <StyledPressable hitSlop={10} onPressOut={onPressOut}>
+          <MaterialCommunityIcons name="plus" size={24} color={theme.colors.white} />
+        </StyledPressable>
+      </ButtonContainer>
     </>
   );
 };
