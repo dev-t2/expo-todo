@@ -15,7 +15,7 @@ const StyledImage = styled.Image({
 const StyledText = styled.Text(({ theme }) => ({
   fontSize: 18,
   fontWeight: '700',
-  color: theme.colors.primary.dark,
+  color: theme.colors.black,
   marginTop: 10,
 }));
 

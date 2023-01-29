@@ -19,6 +19,17 @@ const StyledView = styled.View<IStyledView>(({ theme, isOpened, windowWidth, key
   justifyContent: 'center',
   backgroundColor: theme.colors.primary.default,
   borderRadius: 30,
+  shadowColor: theme.colors.black,
+  ...Platform.select({
+    ios: {
+      shadowOffset: { width: 2, height: 4 },
+      shadowOpacity: 0.5,
+      shadowRadius: 5,
+    },
+    android: {
+      elevation: 5,
+    },
+  }),
 }));
 
 const StyledTextInput = styled.TextInput(({ theme }) => ({
