@@ -52,6 +52,23 @@ const ListScreen = () => {
     [dispatch, setItem, todos]
   );
 
+  const onToggle = useCallback(
+    (id: string) => async () => {
+      const updatedTodos = todos.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, isDone: !todo.isDone };
+        }
+
+        return todo;
+      });
+
+      await setItem(JSON.stringify(updatedTodos));
+
+      dispatch(updateTodos(updatedTodos));
+    },
+    [todos, setItem, dispatch]
+  );
+
   const onDelete = useCallback(
     (id: string) => async () => {
       const deletedTodos = todos.filter((todo) => todo.id !== id);
@@ -65,7 +82,7 @@ const ListScreen = () => {
 
   return (
     <Container bottom={bottom}>
-      <List todos={todos} onIsBottom={onIsBottom} onDelete={onDelete} />
+      <List todos={todos} onIsBottom={onIsBottom} onToggle={onToggle} onDelete={onDelete} />
 
       <InputFAB isBottom={isBottom} onInsert={onInsert} />
     </Container>

@@ -27,15 +27,16 @@ const Task = styled.Text<ITask>(({ theme, isDone }) => ({
 }));
 
 interface IListItem extends ITodo {
+  onToggle: (id: string) => () => void;
   onDelete: (id: string) => () => void;
 }
 
-const ListItem: FC<IListItem> = ({ id, task, isDone, onDelete }) => {
+const ListItem: FC<IListItem> = ({ id, task, isDone, onToggle, onDelete }) => {
   const theme = useTheme();
 
   return (
     <Container>
-      <Pressable hitSlop={10}>
+      <Pressable hitSlop={10} onPress={onToggle(id)}>
         {isDone ? (
           <MaterialCommunityIcons
             name={'checkbox-marked'}
