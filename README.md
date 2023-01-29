@@ -1,6 +1,5 @@
 # References
 
-- [React Native](https://reactnative.dev)
 - [Expo](https://expo.dev)
   - [Using TypeScript](https://docs.expo.dev/guides/typescript)
   - [Vector Icons](https://icons.expo.fyi)
@@ -21,3 +20,4 @@
   - [Redux Toolkit Quick Start](https://redux-toolkit.js.org/tutorials/quick-start)
   - [Redux Toolkit TypeScript Quick Start](https://redux-toolkit.js.org/tutorials/typescript)
 - [Async Storage](https://react-native-async-storage.github.io/async-storage)
+  - [Installation](https://react-native-async-storage.github.io/async-storage/docs/install)
