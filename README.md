@@ -21,3 +21,4 @@
   - [Redux Toolkit Quick Start](https://redux-toolkit.js.org/tutorials/quick-start)
   - [Redux Toolkit TypeScript Quick Start](https://redux-toolkit.js.org/tutorials/typescript)
 - [Nano ID](https://github.com/ai/nanoid)
+- [Async Storage](https://react-native-async-storage.github.io/async-storage)
