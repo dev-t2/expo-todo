@@ -4,6 +4,9 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/native';
 
+import { useAppDispatch } from '../store';
+import { insertTodo } from '../slices/user';
+
 interface IInputContainer {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   inputWidth: any;
@@ -74,6 +77,8 @@ const InputFAB = () => {
   const { width } = useWindowDimensions();
 
   const theme = useTheme();
+
+  const dispatch = useAppDispatch();
 
   const [isOpened, setIsOpened] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(BOTTOM);
@@ -157,6 +162,17 @@ const InputFAB = () => {
     }
   }, [isOpened]);
 
+  const onSubmitEditing = useCallback(() => {
+    const id = Date.now().toString();
+    const task = text.trim();
+
+    if (task) {
+      dispatch(insertTodo({ id, task, isDone: false }));
+
+      setText('');
+    }
+  }, [text, dispatch]);
+
   return (
     <>
       <InputContainer inputWidth={inputWidth} keyboardHeight={keyboardHeight}>
@@ -169,6 +185,7 @@ const InputFAB = () => {
           value={text}
           onChangeText={onChangeText}
           onBlur={onBlur}
+          onSubmitEditing={onSubmitEditing}
         />
       </InputContainer>
 

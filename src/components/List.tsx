@@ -1,19 +1,19 @@
-import { FC, memo, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { FlatList, ListRenderItem } from 'react-native';
 
-import ListItem, { IListItem } from './ListItem';
+import { useAppSelector } from '../store';
+import { ITodo } from '../slices/user';
+import ListItem from './ListItem';
 import ListHeader from './ListHeader';
 import ItemSeparator from './ItemSeparator';
 import ListEmpty from './ListEmpty';
 
-interface IList {
-  todos: IListItem[];
-}
+const List = () => {
+  const { todos } = useAppSelector((state) => state.user);
 
-const List: FC<IList> = ({ todos }) => {
-  const keyExtractor = useCallback(({ id }: IListItem) => `${id}`, []);
+  const keyExtractor = useCallback(({ id }: ITodo) => id, []);
 
-  const renderItem = useCallback<ListRenderItem<IListItem>>(({ item }) => {
+  const renderItem = useCallback<ListRenderItem<ITodo>>(({ item }) => {
     return <ListItem {...item} />;
   }, []);
 

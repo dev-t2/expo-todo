@@ -4,6 +4,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/native';
 
+import { ITodo } from '../slices/user';
+
 const Container = styled.View({
   flexDirection: 'row',
   alignItems: 'center',
@@ -20,17 +22,11 @@ interface ITask {
 
 const Task = styled.Text<ITask>(({ theme, isDone }) => ({
   flex: 1,
-  color: isDone ? theme.colors.black : theme.colors.gray[500],
+  color: isDone ? theme.colors.gray[500] : theme.colors.black,
   marginHorizontal: 10,
 }));
 
-export interface IListItem {
-  id: number;
-  task: string;
-  isDone: boolean;
-}
-
-const ListItem: FC<IListItem> = ({ task, isDone }) => {
+const ListItem: FC<ITodo> = ({ task, isDone }) => {
   const theme = useTheme();
 
   return (
