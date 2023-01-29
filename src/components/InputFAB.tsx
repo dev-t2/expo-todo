@@ -3,6 +3,7 @@ import { Animated, Keyboard, Platform, TextInput, useWindowDimensions } from 're
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/native';
+import { nanoid } from 'nanoid';
 
 import { useAppDispatch } from '../store';
 import { insertTodo } from '../slices/user';
@@ -163,7 +164,7 @@ const InputFAB = () => {
   }, [isOpened]);
 
   const onSubmitEditing = useCallback(() => {
-    const id = Date.now().toString();
+    const id = nanoid();
     const task = text.trim();
 
     if (task) {

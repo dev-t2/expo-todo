@@ -20,3 +20,4 @@
 - [Redux Toolkit](https://redux-toolkit.js.org)
   - [Redux Toolkit Quick Start](https://redux-toolkit.js.org/tutorials/quick-start)
   - [Redux Toolkit TypeScript Quick Start](https://redux-toolkit.js.org/tutorials/typescript)
+- [Nano ID](https://github.com/ai/nanoid)

@@ -1,3 +1,4 @@
+import 'react-native-get-random-values';
 import { memo } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Provider } from 'react-redux';
