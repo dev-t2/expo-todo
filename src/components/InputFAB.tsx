@@ -3,10 +3,6 @@ import { Animated, Keyboard, Platform, TextInput, useWindowDimensions } from 're
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/native';
-import { nanoid } from 'nanoid';
-
-import { useAppDispatch } from '../store';
-import { insertTodo } from '../slices/user';
 
 interface IInputContainer {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -81,14 +77,13 @@ const BUTTON_RIGHT = 10;
 
 interface IInputFAB {
   isBottom: boolean;
+  onInsert: (task: string) => void;
 }
 
-const InputFAB: FC<IInputFAB> = ({ isBottom }) => {
+const InputFAB: FC<IInputFAB> = ({ isBottom, onInsert }) => {
   const { width } = useWindowDimensions();
 
   const theme = useTheme();
-
-  const dispatch = useAppDispatch();
 
   const [isOpened, setIsOpened] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(BOTTOM);
@@ -181,15 +176,14 @@ const InputFAB: FC<IInputFAB> = ({ isBottom }) => {
   }, [isOpened]);
 
   const onSubmitEditing = useCallback(() => {
-    const id = nanoid();
     const task = text.trim();
 
     if (task) {
-      dispatch(insertTodo({ id, task, isDone: false }));
+      onInsert(task);
 
       setText('');
     }
-  }, [text, dispatch]);
+  }, [text, onInsert]);
 
   return (
     <>

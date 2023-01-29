@@ -26,12 +26,15 @@ const userSlice = createSlice({
     logout: (state) => {
       state.isLoggedIn = false;
     },
+    updateTodos: (state, action: PayloadAction<ITodo[]>) => {
+      state.todos = action.payload;
+    },
     insertTodo: (state, action: PayloadAction<ITodo>) => {
       state.todos = [action.payload, ...state.todos];
     },
   },
 });
 
-export const { login, logout, insertTodo } = userSlice.actions;
+export const { login, logout, updateTodos, insertTodo } = userSlice.actions;
 
 export default userSlice;
