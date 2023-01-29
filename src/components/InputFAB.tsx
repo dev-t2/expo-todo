@@ -1,36 +1,37 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { Keyboard, Platform, TextInput, useWindowDimensions } from 'react-native';
+import { Animated, Keyboard, Platform, TextInput, useWindowDimensions } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/native';
 
 interface IStyledView {
-  isOpened: boolean;
-  windowWidth: number;
+  animatedValue: number;
   keyboardHeight: number;
 }
 
-const StyledView = styled.View<IStyledView>(({ theme, isOpened, windowWidth, keyboardHeight }) => ({
-  position: 'absolute',
-  bottom: keyboardHeight,
-  right: 10,
-  width: isOpened ? windowWidth - 20 : 60,
-  height: 60,
-  justifyContent: 'center',
-  backgroundColor: theme.colors.primary.default,
-  borderRadius: 30,
-  shadowColor: theme.colors.black,
-  ...Platform.select({
-    ios: {
-      shadowOffset: { width: 2, height: 4 },
-      shadowOpacity: 0.5,
-      shadowRadius: 5,
-    },
-    android: {
-      elevation: 5,
-    },
-  }),
-}));
+const StyledView = styled(Animated.View)<IStyledView>(
+  ({ theme, animatedValue, keyboardHeight }) => ({
+    position: 'absolute',
+    bottom: keyboardHeight,
+    right: 10,
+    width: animatedValue,
+    height: 60,
+    justifyContent: 'center',
+    backgroundColor: theme.colors.primary.default,
+    borderRadius: 30,
+    shadowColor: theme.colors.black,
+    ...Platform.select({
+      ios: {
+        shadowOffset: { width: 2, height: 4 },
+        shadowOpacity: 0.5,
+        shadowRadius: 5,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
+  })
+);
 
 const StyledTextInput = styled.TextInput(({ theme }) => ({
   paddingLeft: 20,
@@ -55,6 +56,7 @@ const StyledPressable = styled.Pressable<IStyledPressable>(({ theme, keyboardHei
 }));
 
 const BOTTOM = 30;
+const INPUT_WIDTH = 60;
 
 const InputFAB = () => {
   const { width } = useWindowDimensions();
@@ -63,9 +65,11 @@ const InputFAB = () => {
 
   const [isOpened, setIsOpened] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(BOTTOM);
+  const [animatedValue, setAnimatedValue] = useState(INPUT_WIDTH);
   const [text, setText] = useState('');
 
   const inputRef = useRef<TextInput>(null);
+  const inputWidth = useRef(new Animated.Value(INPUT_WIDTH)).current;
 
   useEffect(() => {
     if (Platform.OS === 'ios') {
@@ -84,18 +88,40 @@ const InputFAB = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const id = inputWidth.addListener(({ value }) => {
+      setAnimatedValue(value);
+    });
+
+    return () => {
+      inputWidth.removeListener(id);
+    };
+  }, [inputWidth]);
+
   const onPressOut = useCallback(() => {
     if (isOpened) {
-      inputRef.current?.blur();
-
-      setIsOpened(false);
       setText('');
-    } else {
-      inputRef.current?.focus();
+      setIsOpened(false);
 
+      Animated.timing(inputWidth, {
+        toValue: INPUT_WIDTH,
+        useNativeDriver: false,
+        duration: 250,
+      }).start(() => {
+        inputRef.current?.blur();
+      });
+    } else {
       setIsOpened(true);
+
+      Animated.timing(inputWidth, {
+        toValue: width - 20,
+        useNativeDriver: false,
+        duration: 250,
+      }).start(() => {
+        inputRef.current?.focus();
+      });
     }
-  }, [isOpened]);
+  }, [isOpened, inputWidth, width]);
 
   const onChangeText = useCallback((text: string) => {
     setText(text);
@@ -112,7 +138,7 @@ const InputFAB = () => {
 
   return (
     <>
-      <StyledView isOpened={isOpened} windowWidth={width} keyboardHeight={keyboardHeight}>
+      <StyledView animatedValue={animatedValue} keyboardHeight={keyboardHeight}>
         <StyledTextInput
           ref={inputRef}
           autoCapitalize="none"
