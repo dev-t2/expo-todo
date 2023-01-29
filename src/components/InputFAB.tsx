@@ -1,5 +1,5 @@
-import { memo, useCallback, useRef, useState } from 'react';
-import { TextInput, useWindowDimensions } from 'react-native';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { Keyboard, Platform, TextInput, useWindowDimensions } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/native';
@@ -7,11 +7,12 @@ import styled from '@emotion/native';
 interface IStyledView {
   isOpened: boolean;
   windowWidth: number;
+  keyboardHeight: number;
 }
 
-const StyledView = styled.View<IStyledView>(({ theme, isOpened, windowWidth }) => ({
+const StyledView = styled.View<IStyledView>(({ theme, isOpened, windowWidth, keyboardHeight }) => ({
   position: 'absolute',
-  bottom: 30,
+  bottom: keyboardHeight,
   right: 10,
   width: isOpened ? windowWidth - 20 : 60,
   height: 60,
@@ -26,9 +27,13 @@ const StyledTextInput = styled.TextInput(({ theme }) => ({
   color: theme.colors.white,
 }));
 
-const StyledPressable = styled.Pressable(({ theme }) => ({
+interface IStyledPressable {
+  keyboardHeight: number;
+}
+
+const StyledPressable = styled.Pressable<IStyledPressable>(({ theme, keyboardHeight }) => ({
   position: 'absolute',
-  bottom: 30,
+  bottom: keyboardHeight,
   right: 10,
   width: 60,
   height: 60,
@@ -38,15 +43,35 @@ const StyledPressable = styled.Pressable(({ theme }) => ({
   borderRadius: 30,
 }));
 
+const BOTTOM = 30;
+
 const InputFAB = () => {
   const { width } = useWindowDimensions();
 
   const theme = useTheme();
 
   const [isOpened, setIsOpened] = useState(false);
+  const [keyboardHeight, setKeyboardHeight] = useState(BOTTOM);
   const [text, setText] = useState('');
 
   const inputRef = useRef<TextInput>(null);
+
+  useEffect(() => {
+    if (Platform.OS === 'ios') {
+      const show = Keyboard.addListener('keyboardWillShow', ({ endCoordinates }) => {
+        setKeyboardHeight(endCoordinates.height + BOTTOM);
+      });
+
+      const hide = Keyboard.addListener('keyboardWillHide', () => {
+        setKeyboardHeight(BOTTOM);
+      });
+
+      return () => {
+        show.remove();
+        hide.remove();
+      };
+    }
+  }, []);
 
   const onPressOut = useCallback(() => {
     if (isOpened) {
@@ -76,7 +101,7 @@ const InputFAB = () => {
 
   return (
     <>
-      <StyledView isOpened={isOpened} windowWidth={width}>
+      <StyledView isOpened={isOpened} windowWidth={width} keyboardHeight={keyboardHeight}>
         <StyledTextInput
           ref={inputRef}
           autoCapitalize="none"
@@ -89,7 +114,7 @@ const InputFAB = () => {
         />
       </StyledView>
 
-      <StyledPressable hitSlop={10} onPressOut={onPressOut}>
+      <StyledPressable hitSlop={10} keyboardHeight={keyboardHeight} onPressOut={onPressOut}>
         <MaterialCommunityIcons name="plus" size={24} color={theme.colors.white} />
       </StyledPressable>
     </>
