@@ -5,8 +5,8 @@ const Container = styled.View({
   height: 20,
 });
 
-const ListHeader = () => {
+const ListHeaderAndFooter = () => {
   return <Container />;
 };
 
-export default memo(ListHeader);
+export default memo(ListHeaderAndFooter);

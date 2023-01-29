@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FC, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, Keyboard, Platform, TextInput, useWindowDimensions } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from '@emotion/react';
@@ -12,13 +12,15 @@ interface IInputContainer {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   inputWidth: any;
   keyboardHeight: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  buttonRight: any;
 }
 
 const InputContainer = styled(Animated.View)<IInputContainer>(
-  ({ theme, inputWidth, keyboardHeight }) => ({
+  ({ theme, inputWidth, keyboardHeight, buttonRight }) => ({
     position: 'absolute',
     bottom: keyboardHeight,
-    right: 10,
+    right: buttonRight,
     width: inputWidth,
     height: 60,
     justifyContent: 'center',
@@ -48,13 +50,15 @@ interface IButtonContainer {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   animatedRotation: any;
   keyboardHeight: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  buttonRight: any;
 }
 
 const ButtonContainer = styled(Animated.View)<IButtonContainer>(
-  ({ animatedRotation, keyboardHeight }) => ({
+  ({ animatedRotation, keyboardHeight, buttonRight }) => ({
     position: 'absolute',
     bottom: keyboardHeight,
-    right: 10,
+    right: buttonRight,
     width: 60,
     height: 60,
     borderRadius: 30,
@@ -73,8 +77,13 @@ const StyledPressable = styled.Pressable(({ theme }) => ({
 
 const BOTTOM = 30;
 const INPUT_WIDTH = 60;
+const BUTTON_RIGHT = 10;
 
-const InputFAB = () => {
+interface IInputFAB {
+  isBottom: boolean;
+}
+
+const InputFAB: FC<IInputFAB> = ({ isBottom }) => {
   const { width } = useWindowDimensions();
 
   const theme = useTheme();
@@ -88,6 +97,7 @@ const InputFAB = () => {
   const inputRef = useRef<TextInput>(null);
   const inputWidth = useRef(new Animated.Value(INPUT_WIDTH)).current;
   const buttonRotation = useRef(new Animated.Value(0)).current;
+  const buttonRight = useRef(new Animated.Value(BUTTON_RIGHT)).current;
 
   const animatedRotation = useMemo(() => {
     return buttonRotation.interpolate({
@@ -112,6 +122,13 @@ const InputFAB = () => {
       };
     }
   }, []);
+
+  useEffect(() => {
+    Animated.timing(buttonRight, {
+      toValue: isBottom ? BUTTON_RIGHT - INPUT_WIDTH : BUTTON_RIGHT,
+      useNativeDriver: false,
+    }).start();
+  }, [buttonRight, isBottom]);
 
   const onPressOut = useCallback(() => {
     if (isOpened) {
@@ -176,7 +193,11 @@ const InputFAB = () => {
 
   return (
     <>
-      <InputContainer inputWidth={inputWidth} keyboardHeight={keyboardHeight}>
+      <InputContainer
+        inputWidth={inputWidth}
+        keyboardHeight={keyboardHeight}
+        buttonRight={buttonRight}
+      >
         <StyledTextInput
           ref={inputRef}
           autoCapitalize="none"
@@ -190,7 +211,11 @@ const InputFAB = () => {
         />
       </InputContainer>
 
-      <ButtonContainer animatedRotation={animatedRotation} keyboardHeight={keyboardHeight}>
+      <ButtonContainer
+        animatedRotation={animatedRotation}
+        keyboardHeight={keyboardHeight}
+        buttonRight={buttonRight}
+      >
         <StyledPressable hitSlop={10} onPressOut={onPressOut}>
           <MaterialCommunityIcons name="plus" size={24} color={theme.colors.white} />
         </StyledPressable>

@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from '@emotion/native';
 
@@ -16,10 +16,17 @@ const Container = styled.View<IContainer>(({ bottom }) => ({
 const ListScreen = () => {
   const { bottom } = useSafeAreaInsets();
 
+  const [isBottom, setIsBottom] = useState(false);
+
+  const onIsBottom = useCallback((isBottom: boolean) => {
+    setIsBottom(isBottom);
+  }, []);
+
   return (
     <Container bottom={bottom}>
-      <List />
-      <InputFAB />
+      <List onIsBottom={onIsBottom} />
+
+      <InputFAB isBottom={isBottom} />
     </Container>
   );
 };

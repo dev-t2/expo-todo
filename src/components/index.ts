@@ -6,6 +6,6 @@ export { default as InputFAB } from './InputFAB';
 export { default as ItemSeparator } from './ItemSeparator';
 export { default as List } from './List';
 export { default as ListEmpty } from './ListEmpty';
-export { default as ListHeader } from './ListHeader';
+export { default as ListHeaderAndFooter } from './ListHeaderAndFooter';
 export { default as ListItem } from './ListItem';
 export { default as SafeInputContainer } from './SafeInputContainer';
